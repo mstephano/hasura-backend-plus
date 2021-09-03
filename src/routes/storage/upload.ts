@@ -45,6 +45,8 @@ export const uploadFile = async (
       Body: resource.data,
       ContentType: resource.mimetype,
       Metadata: {
+        currentfilename: key.split('/').pop() || '',
+        originalfilename: resource.name,
         token: oldHeadObject?.Metadata?.token || uuidv4()
       }
     }

@@ -126,7 +126,7 @@ export const getFile = async (
       const etag = `"${getHash([optimizedBuffer])}"` // The extra quotes are needed to conform to the ETag protocol (https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.11)
 
       res.set('Content-Type', headObject.ContentType)
-      res.set('Content-Disposition', `inline;`)
+      res.set('Content-Disposition', `inline; filename="${headObject.Metadata?.originalfilename || ''}"`)
       res.set('Cache-Control', 'public, max-age=31557600')
       res.set('ETag', etag)
       return res.send(optimizedBuffer)
@@ -160,7 +160,7 @@ export const getFile = async (
       res.set('Content-Type', headObject.ContentType)
       res.set('Content-Length', headObject.ContentLength?.toString())
       res.set('Last-Modified', headObject.LastModified?.toUTCString())
-      res.set('Content-Disposition', `inline;`)
+      res.set('Content-Disposition', `inline; filename="${headObject.Metadata?.originalfilename || ''}"`)
       res.set('Cache-Control', 'public, max-age=31557600')
       res.set('ETag', headObject.ETag)
 
